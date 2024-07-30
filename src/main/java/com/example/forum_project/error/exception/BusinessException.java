@@ -1,6 +1,7 @@
-package com.example.forum_project.api;
+package com.example.forum_project.error.exception;
 
 
+import com.example.forum_project.error.ErrorCode;
 import lombok.Getter;
 
 /*
@@ -9,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class BusinessException extends RuntimeException { // 상속해서 depth를 늘리는 설계
 
-    private ErrorCode errorCode;
+    private ErrorCode errorCode; //상속가능하기 때문에 final 아님.
 
     public BusinessException(String message, ErrorCode errorCode) {
         super(message);

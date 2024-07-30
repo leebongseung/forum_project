@@ -1,4 +1,4 @@
-package com.example.forum_project.api;
+package com.example.forum_project.error;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

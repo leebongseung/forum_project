@@ -1,4 +1,4 @@
-package com.example.forum_project.api;
+package com.example.forum_project.error;
 
 import java.util.ArrayList;
 import java.util.List;

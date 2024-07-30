@@ -1,6 +1,8 @@
-package com.example.forum_project.api;
+package com.example.forum_project.error;
 
 import java.nio.file.AccessDeniedException;
+
+import com.example.forum_project.error.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
