@@ -1,7 +1,7 @@
-package com.example.forum_project.error.exception;
+package com.example.forum_project.common.error.exception;
 
 
-import com.example.forum_project.error.ErrorCode;
+import com.example.forum_project.common.error.ErrorCode;
 import lombok.Getter;
 
 /*

@@ -1,4 +1,4 @@
-package com.example.forum_project.error;
+package com.example.forum_project.common.error;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -17,8 +17,9 @@ public enum ErrorCode {
 
 
     // Member
-    EMAIL_DUPLICATION(HttpStatus.BAD_REQUEST.value(), "M001", "이메일이 중복됩니다."),
-    LOGIN_INPUT_INVALID(HttpStatus.BAD_REQUEST.value(), "M002", "로그인 입력이 잘못되었습니다."),
+    EMAIL_DUPLICATION(HttpStatus.CONFLICT.value(), "M001", "이메일이 중복됩니다."),
+    LOGIN_ID_DUPLICATION(HttpStatus.CONFLICT.value(), "M002", "로그인 아이디가 중복됩니다."),
+    LOGIN_INPUT_INVALID(HttpStatus.BAD_REQUEST.value(), "M003", "로그인 입력이 잘못되었습니다."),
 
 
     ;
