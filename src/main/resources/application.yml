@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: =forum_project
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;MODE=MySQL;
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    # data.sql? ?????? ??.
+    defer-datasource-initialization: true
+
+
+logging:
+  level:
+    root: info
+    org.springframework: info
+    com.example: debug
