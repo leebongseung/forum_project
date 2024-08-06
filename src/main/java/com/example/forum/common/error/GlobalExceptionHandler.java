@@ -10,8 +10,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.nio.file.AccessDeniedException;
+
+import static com.example.forum.common.error.ErrorCode.*;
 
 @ControllerAdvice
 @Slf4j
@@ -30,7 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * @ModelAttribut 으로 binding error 발생시 BindException 발생한다.
+     * @ModelAttribute 으로 binding error 발생시 BindException 발생한다.
      * ref https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-modelattrib-method-args
      */
     @ExceptionHandler(BindException.class)
@@ -57,7 +60,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.error("handleHttpRequestMethodNotSupportedException", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED);
+        final ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
         return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
@@ -67,8 +70,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
         log.error("handleAccessDeniedException", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.HANDLE_ACCESS_DENIED);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus()));
+        final ErrorResponse response = ErrorResponse.of(HANDLE_ACCESS_DENIED);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(HANDLE_ACCESS_DENIED.getStatus()));
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -83,7 +86,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error("handleEntityNotFoundException", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
+        final ErrorResponse response = ErrorResponse.of(INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * 지원하지 않는 리소스를 요청하는 경우
+     * */
+    @ExceptionHandler(NoResourceFoundException.class)
+    protected ResponseEntity<ErrorResponse> handleNoResourceFoundException(NoResourceFoundException e) {
+        log.error("handleNoResourceFoundException", e);
+        final ErrorResponse response = ErrorResponse.of(RESOURCE_NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

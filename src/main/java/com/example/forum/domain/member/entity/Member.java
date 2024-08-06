@@ -1,14 +1,15 @@
-package com.example.forum_project.domain.member.entity;
+package com.example.forum.domain.member.entity;
 
-import com.example.forum_project.common.entity.BaseEntity;
+import com.example.forum.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Getter
-public class Member extends BaseEntity {
+public class Member extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

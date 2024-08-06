@@ -26,3 +26,8 @@ logging:
     root: info
     org.springframework: info
     com.example: debug
+
+token:
+  secret: 233b905917ca288574ecd8669e6a368d77131bacf982c04cf8e5c3ba818e420b00e7b67b71394c0fa8650340735673f5109fa5c381523bb781bd6ff4a1d49df8
+
+  expiration_time: 864000000

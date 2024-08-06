@@ -14,6 +14,7 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "C004", "Server Error"),
     INVALID_TYPE_VALUE(HttpStatus.BAD_REQUEST.value(), "C005", " 잘못된 형식 값"),
     HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN.value(), "C006", "액세스가 거부되었습니다."),
+    RESOURCE_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "C007", "리소스를 찾을 수 없습니다."),
 
 
     // Member
