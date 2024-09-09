@@ -4,7 +4,7 @@ import com.example.forum.config.exceptionhandler.CustomAuthenticationEntryPoint;
 import com.example.forum.config.filter.JwtAuthenticationFilter;
 import com.example.forum.config.filter.LoginAuthenticationFilter;
 import com.example.forum.config.jwt.JwtTokenGenerator;
-import com.example.forum.config.security.SecurityConstants;
+import com.example.forum.config.security.ExcludedJwtPaths;
 import com.example.forum.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -49,7 +49,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable) // token을 사용하는 방식이기 때문에 csrf를 disable합니다
                 .authorizeHttpRequests(
                         a -> a.requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers(SecurityConstants.EXCLUDE_URLS.toArray(new String[0])).permitAll()
+                                .requestMatchers(ExcludedJwtPaths.EXCLUDE_URLS.toArray(new String[0])).permitAll()
                                 .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()
                                 .anyRequest().authenticated()
                 )
