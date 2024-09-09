@@ -1,6 +1,5 @@
 package com.example.forum.config.exceptionhandler;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +13,12 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.debug("CustomAuthenticationEntryPoint 동작");
+    public void commence(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AuthenticationException authException
+    ) throws IOException {
+        log.debug("CustomAuthenticationEntryPoint 동작 = {}", request.getRequestURI());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }
