@@ -21,10 +21,11 @@ public enum ErrorCode {
     EMAIL_DUPLICATION(HttpStatus.CONFLICT.value(), "M001", "이메일이 중복됩니다."),
     LOGIN_ID_DUPLICATION(HttpStatus.CONFLICT.value(), "M002", "로그인 아이디가 중복됩니다."),
     LOGIN_INPUT_INVALID(HttpStatus.BAD_REQUEST.value(), "M003", "로그인 입력이 잘못되었습니다."),
-    MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "M004","사용자를 찾을 수 없거나 권한이 없습니다.")
+    MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "M004", "사용자를 찾을 수 없거나 권한이 없습니다."),
 
+    // authentication, approval
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST.value(), "A001", "잘못된 형식의 토큰");
 
-    ;
     private final String code;
     private final String message;
     private int status;
