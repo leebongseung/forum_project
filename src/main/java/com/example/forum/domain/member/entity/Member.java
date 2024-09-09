@@ -1,10 +1,13 @@
 package com.example.forum.domain.member.entity;
 
 import com.example.forum.common.entity.BaseEntity;
+import com.example.forum.domain.forum.entity.Forum;
+import com.example.forum.domain.member.dto.SignUpMemberReqDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -36,9 +39,19 @@ public class Member extends BaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private MemberRole role; // 권한
 
-    public void settingUpAMember() {
-        this.memberId = UUID.randomUUID().toString();
-        this.role = MemberRole.MEMBER;
+    @OneToMany(mappedBy = "author")
+    private List<Forum> forums;
+
+    public static Member of(SignUpMemberReqDto signUpMemberReqDto) {
+        Member member = new Member();
+        member.name = signUpMemberReqDto.getName();
+        member.memberId = UUID.randomUUID().toString();
+        member.loginId = signUpMemberReqDto.getLoginId();
+        member.password = signUpMemberReqDto.getPassword();
+        member.email = signUpMemberReqDto.getEmail();
+        member.phoneNumber = signUpMemberReqDto.getPhoneNumber();
+        member.role = MemberRole.MEMBER;
+        return member;
     }
 
     public void passwordEncryption(String encryptedPasswords) {
