@@ -7,7 +7,7 @@ public interface ForumService {
     // 게시글 생성
     ResponseForum createForum(ForumReqDto forumReqDto, String memberId);
     // 게시글 수정
-    ResponseForum updateForum(ForumReqDto forumReqDto, String memberId);
+    ResponseForum updateForum(String forumId, ForumReqDto forumReqDto, String memberId);
     // 게시글 삭제
-    ResponseForum deleteForum(Long memberId);
+    void deleteForum(String forumId,String memberId);
 }

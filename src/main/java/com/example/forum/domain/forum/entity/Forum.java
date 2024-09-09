@@ -53,4 +53,15 @@ public class Forum extends BaseEntity {
         forum.author = author;
         return forum;
     }
+
+    // 커스텀 메서드를 통해 필요한 필드만 업데이트
+    public void updateForum(ForumReqDto forumReqDto) {
+        if (title != null && !title.isEmpty()) {
+            this.title = forumReqDto.getTitle();
+        }
+
+        if (content != null && !content.isEmpty()) {
+            this.content = forumReqDto.getContent();
+        }
+    }
 }

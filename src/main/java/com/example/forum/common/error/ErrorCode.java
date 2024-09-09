@@ -16,7 +16,6 @@ public enum ErrorCode {
     HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN.value(), "C006", "액세스가 거부되었습니다."),
     RESOURCE_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "C007", "리소스를 찾을 수 없습니다."),
 
-
     // Member
     EMAIL_DUPLICATION(HttpStatus.CONFLICT.value(), "M001", "이메일이 중복됩니다."),
     LOGIN_ID_DUPLICATION(HttpStatus.CONFLICT.value(), "M002", "로그인 아이디가 중복됩니다."),
@@ -25,7 +24,12 @@ public enum ErrorCode {
 
     // authentication, approval
     INVALID_TOKEN(HttpStatus.BAD_REQUEST.value(), "A001", "잘못된 형식의 토큰"),
-    SC_UNAUTHORIZED(HttpStatus.UNAUTHORIZED.value(), "A002", "유효한 자격이 없음.");
+    SC_UNAUTHORIZED(HttpStatus.UNAUTHORIZED.value(), "A002", "유효한 자격이 없음."),
+
+    // forum
+    FORUM_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "F001", "게시글을 찾을 수 없습니다.")
+    ;
+
 
     private final String code;
     private final String message;
