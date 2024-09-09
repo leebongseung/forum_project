@@ -4,7 +4,7 @@ import com.example.forum.config.security.CustomUserDetails;
 import com.example.forum.domain.member.dto.LoginMemberReqDto;
 import com.example.forum.domain.member.entity.Member;
 import com.example.forum.domain.member.service.MemberService;
-import com.example.forum.domain.member.vo.ResponseMemberVo;
+import com.example.forum.domain.member.vo.ResponseMember;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.io.Decoders;
@@ -27,8 +27,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -99,9 +97,9 @@ class LoginAuthenticationFilterTest {
         // SecretKey secretKey = new SecretKeySpec("secret".getBytes(), "HmacSHA256");
 
         when(authentication.getPrincipal()).thenReturn(CustomUserDetails.of(member));
-        when(memberService.getMemberByLoginId("testuser")).thenReturn(ResponseMemberVo.of("1","testuser","test@test.com","test"));
+        when(memberService.getMemberVoByLoginId("testuser")).thenReturn(new ResponseMember("1","testuser","test@test.com","test"));
         when(env.getProperty("token.secret")).thenReturn(secretKeyBase64);
-        when(Decoders.BASE64.decode(secretKeyBase64)).thenReturn("secret".getBytes());
+        when(Decoders.BASE64.decode(secretKeyBase64)).thenReturn(any());
 
         //when
         loginAuthenticationFilter.successfulAuthentication(request, response, filterChain, authentication);

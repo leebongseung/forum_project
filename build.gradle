@@ -38,8 +38,6 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // modelMapper, 서로 다른 클래스의 필드를 복사하게 도와주는 라이브러리
-    implementation 'org.modelmapper:modelmapper:3.2.0'
 
     // jwt 의존성 추가
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.6'

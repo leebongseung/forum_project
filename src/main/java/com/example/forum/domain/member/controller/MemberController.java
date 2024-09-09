@@ -4,7 +4,7 @@ import com.example.forum.common.annotation.ApiErrorCodeExamples;
 import com.example.forum.common.error.ErrorCode;
 import com.example.forum.domain.member.dto.SignUpMemberReqDto;
 import com.example.forum.domain.member.service.MemberService;
-import com.example.forum.domain.member.vo.ResponseMemberVo;
+import com.example.forum.domain.member.vo.ResponseMember;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -27,7 +27,7 @@ public class MemberController {
     @PostMapping
     @Operation(summary = "회원 가입", description = "회원가입을 요청합니다.")
     @ApiErrorCodeExamples({ErrorCode.EMAIL_DUPLICATION, ErrorCode.LOGIN_ID_DUPLICATION})
-    public ResponseMemberVo signUp(
+    public ResponseMember signUp(
             @Valid @RequestBody SignUpMemberReqDto signUpMemberReqDto
     ) {
         return memberService.signUp(signUpMemberReqDto);

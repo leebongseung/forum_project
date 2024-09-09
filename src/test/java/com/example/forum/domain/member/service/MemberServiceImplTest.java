@@ -2,7 +2,7 @@ package com.example.forum.domain.member.service;
 
 import com.example.forum.domain.member.dto.SignUpMemberReqDto;
 import com.example.forum.domain.member.repository.MemberRepository;
-import com.example.forum.domain.member.vo.ResponseMemberVo;
+import com.example.forum.domain.member.vo.ResponseMember;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,15 +37,15 @@ class MemberServiceImplTest {
 
         // when
         when(passwordEncoder.encode("newPassword")).thenReturn("encodedPassword");
-        ResponseMemberVo memberVo = memberService.signUp(signUpMemberReqDto);
+        ResponseMember responseMember = memberService.signUp(signUpMemberReqDto);
 
         // then : member의 id가 제대로 생성되었는지 확인.
-        log.info("회원가입 결과: {}", memberVo.toString());
+        log.info("회원가입 결과: {}", responseMember.toString());
 
 
-        Assertions.assertThat(memberVo.getMemberId()).isNotNull();
-        Assertions.assertThat(memberVo.getName()).isEqualTo("name");
-        Assertions.assertThat(memberVo.getEmail()).isEqualTo("email.com");
-        Assertions.assertThat(memberVo.getLoginId()).isEqualTo("loginId@123");
+        Assertions.assertThat(responseMember.memberId()).isNotNull();
+        Assertions.assertThat(responseMember.name()).isEqualTo("name");
+        Assertions.assertThat(responseMember.email()).isEqualTo("email.com");
+        Assertions.assertThat(responseMember.loginId()).isEqualTo("loginId@123");
     }
 }
