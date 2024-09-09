@@ -23,9 +23,8 @@ public class ForumServiceImpl implements ForumService {
             ForumReqDto forumReqDto,
             String memberId
     ) {
-        Forum forum = Forum.of(forumReqDto);
         Member member = memberService.getMemberByLoginId(memberId);
-        forum.setAuthor(member);
+        Forum forum = Forum.of(forumReqDto, member);
         repository.save(forum);
         return ResponseForumVo.of(forum);
     }
