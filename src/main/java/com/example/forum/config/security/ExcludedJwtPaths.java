@@ -15,6 +15,7 @@ public class ExcludedJwtPaths {
             "/swagger-ui/**",
             "/favicon.ico",
             "/h2-console",
-            "/h2-console/**"
+            "/h2-console/**",
+            "/login"
     );
 }

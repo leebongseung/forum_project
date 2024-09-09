@@ -24,7 +24,8 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "M004", "사용자를 찾을 수 없거나 권한이 없습니다."),
 
     // authentication, approval
-    INVALID_TOKEN(HttpStatus.BAD_REQUEST.value(), "A001", "잘못된 형식의 토큰");
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST.value(), "A001", "잘못된 형식의 토큰"),
+    SC_UNAUTHORIZED(HttpStatus.UNAUTHORIZED.value(), "A002", "유효한 자격이 없음.");
 
     private final String code;
     private final String message;

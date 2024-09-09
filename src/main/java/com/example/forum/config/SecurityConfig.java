@@ -2,15 +2,12 @@ package com.example.forum.config;
 
 import com.example.forum.config.exceptionhandler.CustomAuthenticationEntryPoint;
 import com.example.forum.config.filter.JwtAuthenticationFilter;
-import com.example.forum.config.filter.LoginAuthenticationFilter;
-import com.example.forum.config.jwt.JwtTokenGenerator;
 import com.example.forum.config.security.ExcludedJwtPaths;
 import com.example.forum.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -29,10 +26,8 @@ import org.springframework.security.web.util.matcher.IpAddressMatcher;
 public class SecurityConfig {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final MemberService memberService;
-    private final JwtTokenGenerator tokenGenerator;
     private final JwtAuthenticationFilter authenticationFilter;
     private final PassWordEncoderConfig passwordEncoder;
-    private final Environment env;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -54,7 +49,6 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .authenticationManager(authenticationManager)
-                .addFilter(getAuthenticationFilter(authenticationManager))
                 .addFilterBefore(authenticationFilter, LogoutFilter.class)
                 // errorHandler
                 .exceptionHandling(e -> e.authenticationEntryPoint(customAuthenticationEntryPoint))
@@ -65,8 +59,4 @@ public class SecurityConfig {
         return http.build();
     }
 
-
-    private LoginAuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-        return new LoginAuthenticationFilter(authenticationManager, memberService, tokenGenerator);
-    }
 }

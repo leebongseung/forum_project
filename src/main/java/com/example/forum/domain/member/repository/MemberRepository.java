@@ -15,4 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     // 아이디 + 비밀번호 조회
     Optional<Member> findByLoginIdAndPassword(String loginId, String password);
+
+    // 멤버 아이디 조회
+    Optional<Member> findByMemberId(String memberId);
 }

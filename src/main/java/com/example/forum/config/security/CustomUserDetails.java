@@ -28,7 +28,7 @@ public class CustomUserDetails implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return member.getMemberId();
+        return member.getLoginId();
     }
 
     @Override
