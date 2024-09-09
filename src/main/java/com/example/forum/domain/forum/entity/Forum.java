@@ -6,6 +6,8 @@ import com.example.forum.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.UUID;
+
 import static com.example.forum.domain.forum.entity.ForumEntityConstants.CONTENT_MAX_LENGTH;
 import static com.example.forum.domain.forum.entity.ForumEntityConstants.TITLE_MAX_LENGTH;
 
@@ -23,6 +25,9 @@ public class Forum extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 게시판 id
+
+    @Column(nullable = false, unique = true)
+    private String forumId; // 게시글 해쉬 아이디
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
@@ -42,6 +47,7 @@ public class Forum extends BaseEntity {
 
     public static Forum of(ForumReqDto forumReqDto, Member author) {
         Forum forum = new Forum();
+        forum.forumId = UUID.randomUUID().toString();
         forum.content = forumReqDto.getContent();
         forum.title = forumReqDto.getTitle();
         forum.author = author;

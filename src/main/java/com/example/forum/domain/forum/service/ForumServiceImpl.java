@@ -3,7 +3,7 @@ package com.example.forum.domain.forum.service;
 import com.example.forum.domain.forum.dto.ForumReqDto;
 import com.example.forum.domain.forum.entity.Forum;
 import com.example.forum.domain.forum.repository.ForumRepository;
-import com.example.forum.domain.forum.vo.ResponseForumVo;
+import com.example.forum.domain.forum.vo.ResponseForum;
 import com.example.forum.domain.member.entity.Member;
 import com.example.forum.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -19,23 +19,23 @@ public class ForumServiceImpl implements ForumService {
     private final ForumRepository repository;
 
     @Override
-    public ResponseForumVo createForum(
+    public ResponseForum createForum(
             ForumReqDto forumReqDto,
             String memberId
     ) {
-        Member member = memberService.getMemberByLoginId(memberId);
+        Member member = memberService.getMemberByMemberId(memberId);
         Forum forum = Forum.of(forumReqDto, member);
         repository.save(forum);
-        return ResponseForumVo.of(forum);
+        return new ResponseForum(forum);
     }
 
     @Override
-    public ResponseForumVo updateForum(ForumReqDto forumReqDto, String memberId) {
+    public ResponseForum updateForum(ForumReqDto forumReqDto, String memberId) {
         return null;
     }
 
     @Override
-    public ResponseForumVo deleteForum(Long memberId) {
+    public ResponseForum deleteForum(Long memberId) {
         return null;
     }
 }

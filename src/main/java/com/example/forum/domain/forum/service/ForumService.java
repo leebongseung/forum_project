@@ -1,10 +1,13 @@
 package com.example.forum.domain.forum.service;
 
 import com.example.forum.domain.forum.dto.ForumReqDto;
-import com.example.forum.domain.forum.vo.ResponseForumVo;
+import com.example.forum.domain.forum.vo.ResponseForum;
 
 public interface ForumService {
-    ResponseForumVo createForum(ForumReqDto forumReqDto, String memberId);
-    ResponseForumVo updateForum(ForumReqDto forumReqDto, String memberId);
-    ResponseForumVo deleteForum(Long memberId);
+    // 게시글 생성
+    ResponseForum createForum(ForumReqDto forumReqDto, String memberId);
+    // 게시글 수정
+    ResponseForum updateForum(ForumReqDto forumReqDto, String memberId);
+    // 게시글 삭제
+    ResponseForum deleteForum(Long memberId);
 }
