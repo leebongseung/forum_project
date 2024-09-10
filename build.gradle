@@ -38,7 +38,6 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-
     // jwt 의존성 추가
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.6'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.6'
@@ -46,6 +45,13 @@ dependencies {
 
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'io.lettuce:lettuce-core'
+
+    // batch
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
 }
 
 tasks.named('test') {
