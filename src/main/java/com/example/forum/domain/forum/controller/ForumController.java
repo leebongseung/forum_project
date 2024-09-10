@@ -53,4 +53,24 @@ public class ForumController {
         forumService.deleteForum(forumId, memberId);
         return "success";
     }
+
+    @PostMapping("/{forumId}/views")
+    @Operation(summary = "게시글 조회수 증가", description = "게시글 조회수를 증가합니다.")
+    @ApiErrorCodeExamples({ErrorCode.FORUM_NOT_FOUND, ErrorCode.MEMBER_NOT_FOUND, ErrorCode.SC_UNAUTHORIZED})
+    public String incrementViewCount(@PathVariable String forumId) {
+        forumService.incrementViewCount(forumId);
+        return "success";
+    }
+
+    @PostMapping("/{forumId}/likes")
+    @Operation(summary = "게시글 좋아요 증가", description = "게시글 좋아요를 증가합니다.")
+    @ApiErrorCodeExamples({ErrorCode.FORUM_NOT_FOUND, ErrorCode.MEMBER_NOT_FOUND, ErrorCode.SC_UNAUTHORIZED})
+    public String incrementLikeCount(
+            @PathVariable String forumId,
+            @AuthenticationPrincipal String memberId
+    ) {
+        // 게시글 좋아요 증가
+        forumService.likeForum(forumId, memberId);
+        return "success";
+    }
 }

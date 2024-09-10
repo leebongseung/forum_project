@@ -9,6 +9,7 @@ import com.example.forum.domain.forum.vo.ResponseForum;
 import com.example.forum.domain.member.entity.Member;
 import com.example.forum.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class ForumServiceImpl implements ForumService {
 
     private final MemberService memberService;
     private final ForumRepository repository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Override
     public ResponseForum createForum(
@@ -59,6 +61,16 @@ public class ForumServiceImpl implements ForumService {
         Forum forum = getForumByForumId(forumId);
         validateForumAuthor(forum, memberId);
         repository.delete(forum);
+    }
+
+    @Override
+    public void incrementViewCount(String forumId) {
+        redisTemplate.opsForValue().increment("forum:viewCount:" + forumId);
+    }
+
+    @Override
+    public void likeForum(String forumId, String memberId) {
+
     }
 
     /**

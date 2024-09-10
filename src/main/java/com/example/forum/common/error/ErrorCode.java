@@ -27,7 +27,8 @@ public enum ErrorCode {
     SC_UNAUTHORIZED(HttpStatus.UNAUTHORIZED.value(), "A002", "유효한 자격이 없음."),
 
     // forum
-    FORUM_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "F001", "게시글을 찾을 수 없습니다.")
+    FORUM_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "F001", "게시글을 찾을 수 없습니다."),
+    FORUM_COUNT_SCHEDULING_FAILURE(HttpStatus.INTERNAL_SERVER_ERROR.value(), "F002", "조회수 스케줄러 오류")
     ;
 
 

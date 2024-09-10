@@ -64,4 +64,25 @@ public class Forum extends BaseEntity {
             this.content = forumReqDto.getContent();
         }
     }
+
+    // 조회 수 증가
+    public void incrementViewCount() {
+        this.views++;
+    }
+
+    // 좋아요 증가
+    public void incrementLikeCount() {
+        this.likes++;
+    }
+
+    // 좋아요 취소
+    public void decrementLikeCount() {
+        this.likes--;
+    }
+
+    public void updateViews(Long views) {
+        if (views != null && views >= 0) {
+            this.views += views;
+        }
+    }
 }
