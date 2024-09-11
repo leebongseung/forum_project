@@ -36,6 +36,7 @@ public class ViewCountScheduler {
         try {
             log.info("조회수 업데이트 Scheduler 동작");
             jobLauncher.run(updateViewCountJob, new JobParametersBuilder()
+                    .addLong("time", System.currentTimeMillis())
                     .toJobParameters());
 
             log.info("조회수 증가 로직 시작!");

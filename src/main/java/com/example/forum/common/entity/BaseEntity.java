@@ -26,4 +26,7 @@ public abstract class BaseEntity {
 
     @LastModifiedDate // 엔티티의 값을 변경할 때 자동으로 시간이 저장됨.
     protected LocalDateTime updateAt; // 수정일
+
+    @Column(nullable = false)
+    protected Boolean isDelete = Boolean.FALSE;
 }

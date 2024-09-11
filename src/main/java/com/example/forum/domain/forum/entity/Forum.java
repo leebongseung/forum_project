@@ -5,6 +5,8 @@ import com.example.forum.domain.forum.dto.ForumReqDto;
 import com.example.forum.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.UUID;
 
@@ -21,6 +23,8 @@ import static com.example.forum.domain.forum.entity.ForumEntityConstants.TITLE_M
  */
 @Entity
 @Getter
+@SQLDelete(sql = "UPDATE forum SET is_Delete = true WHERE id = ?")
+@SQLRestriction("is_Delete = false")
 public class Forum extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
