@@ -9,6 +9,10 @@ import com.example.forum.domain.forum.vo.ResponseForum;
 import com.example.forum.domain.member.entity.Member;
 import com.example.forum.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +25,19 @@ public class ForumServiceImpl implements ForumService {
     private final MemberService memberService;
     private final ForumRepository repository;
     private final RedisTemplate<String, String> redisTemplate;
+
+    @Override
+    public ResponseForum selectForum(String forumId) {
+        Forum forum = getForumByForumId(forumId);
+        return new ResponseForum(forum);
+    }
+
+    @Override
+    public Page<ResponseForum> selectForums(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createAt").descending());
+        Page<Forum> forums = repository.findAll(pageable);
+        return forums.map(ResponseForum::new);
+    }
 
     @Override
     public ResponseForum createForum(
@@ -83,6 +100,28 @@ public class ForumServiceImpl implements ForumService {
     public Forum getForumByForumId(String forumId) {
         return repository.findByForumId(forumId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.FORUM_NOT_FOUND));
+    }
+
+    @Override
+    public Page<ResponseForum> searchByCondition(
+            int page,
+            int size,
+            String keyword,
+            String condition
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createAt").descending());
+
+        return switch (condition) {
+            case "title" -> repository.findByTitleContaining(keyword, pageable)
+                    .map(ResponseForum::new);
+            case "content" -> repository.findByContentContaining(keyword, pageable)
+                    .map(ResponseForum::new);
+            case "author" -> repository.findByAuthorNameContaining(keyword, pageable)
+                    .map(ResponseForum::new);
+            default ->
+                    repository.findByTitleContainingOrContentContainingOrAuthorNameContaining(keyword, keyword, keyword, pageable)
+                            .map(ResponseForum::new);
+        };
     }
 
     /**
