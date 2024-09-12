@@ -2,6 +2,7 @@ package com.example.forum.domain.forum.service;
 
 import com.example.forum.domain.forum.dto.ForumReqDto;
 import com.example.forum.domain.forum.entity.Forum;
+import com.example.forum.domain.forum.search.SearchType;
 import com.example.forum.domain.forum.vo.ResponseForum;
 import org.springframework.data.domain.Page;
 
@@ -23,5 +24,5 @@ public interface ForumService {
     // 게시글Id로 게시글 조회
     Forum getForumByForumId(String forumId);
     // 특정 게시물 조회
-    Page<ResponseForum> searchByCondition(int page, int size, String keyword, String condition);
+    Page<ResponseForum> searchByCondition(int page, int size, SearchType keyword, String condition);
 }

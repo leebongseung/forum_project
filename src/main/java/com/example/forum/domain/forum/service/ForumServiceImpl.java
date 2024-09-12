@@ -5,6 +5,8 @@ import com.example.forum.common.error.exception.BusinessException;
 import com.example.forum.domain.forum.dto.ForumReqDto;
 import com.example.forum.domain.forum.entity.Forum;
 import com.example.forum.domain.forum.repository.ForumRepository;
+import com.example.forum.domain.forum.repository.ForumRepositoryImpl;
+import com.example.forum.domain.forum.search.SearchType;
 import com.example.forum.domain.forum.vo.ResponseForum;
 import com.example.forum.domain.member.entity.Member;
 import com.example.forum.domain.member.service.MemberService;
@@ -24,6 +26,7 @@ public class ForumServiceImpl implements ForumService {
 
     private final MemberService memberService;
     private final ForumRepository repository;
+    private final ForumRepositoryImpl customRepository;
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
@@ -106,22 +109,24 @@ public class ForumServiceImpl implements ForumService {
     public Page<ResponseForum> searchByCondition(
             int page,
             int size,
-            String keyword,
+            SearchType keyword,
             String condition
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createAt").descending());
 
-        return switch (condition) {
-            case "title" -> repository.findByTitleContaining(keyword, pageable)
-                    .map(ResponseForum::new);
-            case "content" -> repository.findByContentContaining(keyword, pageable)
-                    .map(ResponseForum::new);
-            case "author" -> repository.findByAuthorNameContaining(keyword, pageable)
-                    .map(ResponseForum::new);
-            default ->
-                    repository.findByTitleContainingOrContentContainingOrAuthorNameContaining(keyword, keyword, keyword, pageable)
-                            .map(ResponseForum::new);
-        };
+        // 1. content 가 null 일 경우
+        if(condition == null){
+            Page<Forum> forums = repository.findAll(pageable);
+            return forums.map(ResponseForum::new);
+        }
+
+        // 2. keyword 가 null 일 경우
+        if(keyword == null){
+            keyword = SearchType.ALL;
+        }
+
+        // 3. keyword, content 가 존재한다면
+        return customRepository.searchByCondition(keyword, condition, pageable);
     }
 
     /**

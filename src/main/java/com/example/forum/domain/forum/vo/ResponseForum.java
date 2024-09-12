@@ -1,6 +1,7 @@
 package com.example.forum.domain.forum.vo;
 
 import com.example.forum.domain.forum.entity.Forum;
+import com.querydsl.core.annotations.QueryProjection;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ public record ResponseForum(
         LocalDateTime createAt, // 생성일
         LocalDateTime updateAt // 수정일
 ) {
+    @QueryProjection // Q파일로 생성하는 방법
     public ResponseForum(Forum forum) {
         this(
                 forum.getForumId(),

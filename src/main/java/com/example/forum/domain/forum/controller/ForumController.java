@@ -2,6 +2,7 @@ package com.example.forum.domain.forum.controller;
 
 import com.example.forum.common.annotation.ApiErrorCodeExamples;
 import com.example.forum.domain.forum.dto.ForumReqDto;
+import com.example.forum.domain.forum.search.SearchType;
 import com.example.forum.domain.forum.service.ForumService;
 import com.example.forum.domain.forum.vo.ResponseForum;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,12 +43,12 @@ public class ForumController {
     }
 
     @GetMapping("/search")
-    @Operation(summary = "특정 게시물 조회", description = "keyword(제목, 내용, 작성자) 에 따른 condition이 포함된 특정 게시물을 조회하는 기능.")
+    @Operation(summary = "특정 게시물 조회", description = "keyword(ALL, TITLE, CONTENT, AUTHOR) 에 따른 condition 이 포함된 특정 게시물을 조회하는 기능.")
     @ApiErrorCodeExamples({MEMBER_NOT_FOUND, SC_UNAUTHORIZED})
     public Page<ResponseForum> searchForums(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) SearchType keyword,
             @RequestParam(required = false) String condition
     ){
         return forumService.searchByCondition(page, size, keyword, condition);
