@@ -5,10 +5,16 @@ import com.example.forum.common.error.exception.BusinessException;
 import com.example.forum.domain.forum.dto.ForumReqDto;
 import com.example.forum.domain.forum.entity.Forum;
 import com.example.forum.domain.forum.repository.ForumRepository;
+import com.example.forum.domain.forum.repository.ForumRepositoryImpl;
+import com.example.forum.domain.forum.search.SearchType;
 import com.example.forum.domain.forum.vo.ResponseForum;
 import com.example.forum.domain.member.entity.Member;
 import com.example.forum.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +26,21 @@ public class ForumServiceImpl implements ForumService {
 
     private final MemberService memberService;
     private final ForumRepository repository;
+    private final ForumRepositoryImpl customRepository;
     private final RedisTemplate<String, String> redisTemplate;
+
+    @Override
+    public ResponseForum selectForum(String forumId) {
+        Forum forum = getForumByForumId(forumId);
+        return new ResponseForum(forum);
+    }
+
+    @Override
+    public Page<ResponseForum> selectForums(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createAt").descending());
+        Page<Forum> forums = repository.findAll(pageable);
+        return forums.map(ResponseForum::new);
+    }
 
     @Override
     public ResponseForum createForum(
@@ -83,6 +103,30 @@ public class ForumServiceImpl implements ForumService {
     public Forum getForumByForumId(String forumId) {
         return repository.findByForumId(forumId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.FORUM_NOT_FOUND));
+    }
+
+    @Override
+    public Page<ResponseForum> searchByCondition(
+            int page,
+            int size,
+            SearchType keyword,
+            String condition
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createAt").descending());
+
+        // 1. content 가 null 일 경우
+        if(condition == null){
+            Page<Forum> forums = repository.findAll(pageable);
+            return forums.map(ResponseForum::new);
+        }
+
+        // 2. keyword 가 null 일 경우
+        if(keyword == null){
+            keyword = SearchType.ALL;
+        }
+
+        // 3. keyword, content 가 존재한다면
+        return customRepository.searchByCondition(keyword, condition, pageable);
     }
 
     /**
