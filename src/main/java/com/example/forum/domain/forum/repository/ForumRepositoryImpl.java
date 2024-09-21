@@ -4,6 +4,7 @@ import com.example.forum.domain.forum.entity.QForum;
 import com.example.forum.domain.forum.search.SearchType;
 import com.example.forum.domain.forum.vo.QResponseForum;
 import com.example.forum.domain.forum.vo.ResponseForum;
+import com.example.forum.domain.member.entity.QMember;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class ForumRepositoryImpl implements ForumRepositoryCustom {
             Pageable pageable
     ) {
         QForum forum = QForum.forum;
+        QMember member = QMember.member;
         BooleanBuilder whereClause = new BooleanBuilder();
 
         switch (keyword) {
@@ -46,6 +48,7 @@ public class ForumRepositoryImpl implements ForumRepositoryCustom {
         List<ResponseForum> fetch = queryFactory
                 .select(new QResponseForum(forum))
                 .from(forum)
+                .innerJoin(forum.author, member).fetchJoin()
                 .where(whereClause)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
