@@ -33,7 +33,7 @@ public class Forum extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String forumId; // 게시글 해쉬 아이디
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member author; // 작성자
 
