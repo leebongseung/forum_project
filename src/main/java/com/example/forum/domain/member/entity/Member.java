@@ -33,7 +33,7 @@ public class Member extends BaseEntity implements Serializable {
     private String phoneNumber; // 휴대폰 번호
 
     @Column(nullable = false, length = 30)
-    private String name; // 닉네임
+    private String name; // 이름
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
